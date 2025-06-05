@@ -1,9 +1,18 @@
 #!/usr/bin/env bash
 set -e
 
+# If DEVELOPER_DIR is not set, try autodetect
+if [ -z "$DEVELOPER_DIR" ]; then
+    export DEVELOPER_DIR=$(dirname $(dirname $(xcode-select -p)))
+fi
+
 export XCODE_VERSION=$(xcodebuild -version | awk '/Xcode/ {print $2}' | tr -d '\n')
-export IIG=$(xcrun -sdk macosx -find iig)
-export SYSROOT_SDK=$(xcrun -sdk macosx -show-sdk-path)
+echo "Detected Xcode version: $XCODE_VERSION"
+echo "Detected Xcode directory: $DEVELOPER_DIR"
+
+# xcrun doesn't work on some old Xcode versions
+export IIG=$DEVELOPER_DIR/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/iig
+export SYSROOT_SDK=$DEVELOPER_DIR/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk
 
 export SOURCE_DIR=$(realpath "$(dirname "${BASH_SOURCE[0]}")")
 export HEADER_DIR=$SOURCE_DIR/header
