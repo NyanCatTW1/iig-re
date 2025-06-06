@@ -21,7 +21,7 @@ export OUTPUT_DIR=$SOURCE_DIR/output/$XCODE_VERSION
 mkdir -p $OUTPUT_DIR
 rm $OUTPUT_DIR/* | true
 
-export IIG_OPTIONS="--framework-name DriverKit -- -I$HEADER_DIR/iokit -I$HEADER_DIR/osfmk -I$HEADER_DIR/bsd -I$HEADER_DIR/bsd-generated -I$HEADER_DIR/EXTERNAL_HEADERS -I -isysroot $SYSROOT_SDK -x c++ -std=gnu++1z -D__IIG=1 -DDRIVERKIT_PRIVATE=1 -DPLATFORM_MacOSX"
+export IIG_OPTIONS="--framework-name DriverKit -- -I$HEADER_DIR/iokit -I$HEADER_DIR/osfmk -I$HEADER_DIR/bsd -I$HEADER_DIR/bsd-generated -I$HEADER_DIR/EXTERNAL_HEADERS -isysroot $SYSROOT_SDK -x c++ -std=gnu++1z -D__IIG=1 -DDRIVERKIT_PRIVATE=1 -DPLATFORM_MacOSX"
 export IIG_FILE_LIST=$(find $SOURCE_DIR/iig -name "*.iig" | xargs -n 1 basename | cut -d '.' -f 1)
 
 for IIG_FILE in $IIG_FILE_LIST
